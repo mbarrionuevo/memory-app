@@ -23,7 +23,7 @@ function useGetAnimals() {
     setIsLoading(false);
   };
 
-  return [data, { problem, isLoading }];
+  return [data, { problem, isLoading, refetch: fetchData }];
 }
 
 export default useGetAnimals;
