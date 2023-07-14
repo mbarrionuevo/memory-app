@@ -1,11 +1,14 @@
 import { useRef } from 'react';
 import PropTypes from 'prop-types';
 
+import { setStoreItem } from 'utils/localStore';
+import { PLAYER_NAME_KEY } from 'constants';
+
 const User = ({ onGameStart }) => {
   const inputRef = useRef();
 
   const handlePlayGame = () => {
-    localStorage.setItem('player-name', inputRef.current.value);
+    setStoreItem(PLAYER_NAME_KEY, inputRef.current.value);
     onGameStart();
   };
 
@@ -23,8 +26,8 @@ const User = ({ onGameStart }) => {
             ref={inputRef}
             autoComplete="none"
             type="text"
-            name="player-name"
-            id="player-name"
+            name={PLAYER_NAME_KEY}
+            id={PLAYER_NAME_KEY}
             className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-bg-white/20 focus:ring-2 focus:ring-inset focus:ring-bg-white/20 sm:text-sm sm:leading-6"
           />
         </div>

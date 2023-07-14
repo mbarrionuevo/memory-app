@@ -3,13 +3,15 @@ import { useState } from 'react';
 import Board from './Board';
 import User from './User';
 
+import { PLAYER_NAME_KEY } from 'constants';
+
+import { getStoreItem, removeStoreItem } from 'utils/localStore';
+
 function Game() {
-  const [showGame, setShowGame] = useState(() =>
-    localStorage.getItem('player-name')
-  );
+  const [showGame, setShowGame] = useState(getStoreItem(PLAYER_NAME_KEY));
 
   const handlePlayAgain = () => {
-    localStorage.removeItem('player-name');
+    removeStoreItem(PLAYER_NAME_KEY);
     setShowGame(false);
   };
 

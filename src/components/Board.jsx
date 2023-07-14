@@ -6,6 +6,10 @@ import Confetti from 'react-confetti';
 import Card from './Card';
 import ErrorScreen from './ErrorScreen';
 
+import { getStoreItem } from 'utils/localStore';
+
+import { PLAYER_NAME_KEY } from 'constants';
+
 import useGetAnimals from 'hooks/useGetAnimals';
 
 const Board = ({ handlePlayAgain }) => {
@@ -15,6 +19,7 @@ const Board = ({ handlePlayAgain }) => {
   const [isValidation, setIsValidation] = useState(false);
   const [score, setScore] = useState({ errors: 0, hits: 0 });
   const [isWon, setIsWon] = useState(false);
+  const [userName] = useState(getStoreItem(PLAYER_NAME_KEY));
 
   useEffect(() => {
     if (score.hits === 16) {
@@ -87,7 +92,7 @@ const Board = ({ handlePlayAgain }) => {
         ))}
       </section>
       <section className="flex gap-6 text-xl text-white font-semibold">
-        <p>Player: {'KaSh'}</p>
+        <p>Player: {userName}</p>
         <p>Errors: {score.errors}</p>
         <p>Hits: {score.hits}</p>
       </section>
