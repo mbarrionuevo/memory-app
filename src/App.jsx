@@ -1,4 +1,4 @@
-import Board from 'components/Board';
+import Game from 'components/Game';
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
         </h1>
       </header>
       <main className="flex h-full w-full flex-grow justify-center items-center overflow-y-auto my-2 px-4">
-        <Board />
+        <Game />
       </main>
     </div>
   );
