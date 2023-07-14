@@ -1,9 +1,10 @@
+import { DEFAULT_PARAMS } from 'constants';
 import { getAnimalsTransform } from './animals.transform';
 
 const API_URL =
   'https://fed-team.modyo.cloud/api/content/spaces/animals/types/game/entries';
 
-export const getAnimals = async (params = { per_page: 8 }) => {
+export const getAnimals = async (params = DEFAULT_PARAMS) => {
   try {
     let dataTransform = [];
     const response = await fetch(`${API_URL}?${new URLSearchParams(params)}`);
@@ -13,8 +14,8 @@ export const getAnimals = async (params = { per_page: 8 }) => {
       dataTransform = getAnimalsTransform(data?.entries);
     }
 
-    return { data: dataTransform, problem: null };
+    return { data: dataTransform, error: null };
   } catch (error) {
-    return { data: [], problem: error };
+    return { data: [], error };
   }
 };

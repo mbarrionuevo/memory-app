@@ -8,12 +8,13 @@ import ErrorScreen from './ErrorScreen';
 
 import { getStoreItem } from 'utils/localStore';
 
-import { PLAYER_NAME_KEY } from 'constants';
+import { PLAYER_NAME_KEY, DEFAULT_PARAMS, PER_PAGE } from 'constants';
 
 import useGetAnimals from 'hooks/useGetAnimals';
 
-const Board = ({ handlePlayAgain }) => {
-  const [animals, { isLoading, problem, refetch }] = useGetAnimals();
+const Board = ({ onGamePlayAgain }) => {
+  const [animals, { isLoading, error, refetch }] =
+    useGetAnimals(DEFAULT_PARAMS);
   const [flippedCards, setFlippedCards] = useState([]);
   const [touchCard, setTouchCard] = useState(null);
   const [isValidation, setIsValidation] = useState(false);
@@ -22,7 +23,7 @@ const Board = ({ handlePlayAgain }) => {
   const [userName] = useState(getStoreItem(PLAYER_NAME_KEY));
 
   useEffect(() => {
-    if (score.hits === 16) {
+    if (score.hits === PER_PAGE) {
       setIsWon(true);
     }
   }, [score]);
@@ -39,21 +40,21 @@ const Board = ({ handlePlayAgain }) => {
     const isMatch = touched?.includes(id) && !touched?.includes(index);
 
     if (isMatch) {
-      setScore((prev) => ({ ...prev, hits: ++prev.hits }));
+      setScore((prev) => ({ ...prev, hits: prev.hits++ }));
       setFlippedCards((prev) => [...prev, id]);
       setTouchCard(null);
       setIsValidation(false);
     } else {
       setTouchCard((prev) => ({ ...prev, [id]: index }));
       setTimeout(() => {
-        setScore((prev) => ({ ...prev, errors: ++prev.errors }));
+        setScore((prev) => ({ ...prev, errors: prev.errors++ }));
         setIsValidation(false);
         setTouchCard(null);
       }, 1000);
     }
   };
 
-  if (problem) {
+  if (error && !isLoading) {
     return <ErrorScreen refetch={refetch} />;
   }
 
@@ -67,7 +68,7 @@ const Board = ({ handlePlayAgain }) => {
         <section>
           <button
             className="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20"
-            onClick={handlePlayAgain}
+            onClick={onGamePlayAgain}
           >
             Play again!
           </button>
@@ -91,18 +92,20 @@ const Board = ({ handlePlayAgain }) => {
           />
         ))}
       </section>
-      <section className="flex gap-6 text-xl text-white font-semibold">
-        <p>Player: {userName}</p>
-        <p>Errors: {score.errors}</p>
-        <p>Hits: {score.hits}</p>
-      </section>
+      {Boolean(animals.length) && (
+        <section className="flex gap-6 text-xl text-white font-semibold">
+          <p>Player: {userName}</p>
+          <p>Errors: {score.errors}</p>
+          <p>Hits: {score.hits}</p>
+        </section>
+      )}
       <Confetti run={isWon} />
     </div>
   );
 };
 
 Board.propTypes = {
-  handlePlayAgain: PropTypes.func,
+  onGamePlayAgain: PropTypes.func,
 };
 
 export default Board;
