@@ -15,7 +15,7 @@ function useGetAnimals() {
 
     const { data, problem } = await getAnimals();
 
-    let shuffledArray = [...data, ...data].sort(() => Math.random() - 0.9);
+    let shuffledArray = [...data, ...data].sort(() => Math.random() * 2 - 0.5);
 
     setProblem(problem);
     setData(shuffledArray);

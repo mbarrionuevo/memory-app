@@ -1,5 +1,7 @@
 import { useState } from 'react';
+
 import Card from './Card';
+import ErrorScreen from './ErrorScreen';
 
 import useGetAnimals from 'hooks/useGetAnimals';
 
@@ -34,19 +36,9 @@ const Board = () => {
   };
 
   if (problem) {
-    return (
-      <div className="flex flex-col gap-2">
-        <h1 className="text-xl text-white">Oops, something went wrong!</h1>
-        <button
-          type="button"
-          className="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20"
-          onClick={refetch}
-        >
-          Try again!
-        </button>
-      </div>
-    );
+    return <ErrorScreen refetch={refetch} />;
   }
+
   if (isLoading) {
     return null;
   }
