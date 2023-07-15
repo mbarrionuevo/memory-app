@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { setStoreItem } from 'utils/localStore';
@@ -7,10 +7,23 @@ import { Button, Input } from './common';
 
 const User = ({ onGameStart }) => {
   const inputRef = useRef();
+  const [inputError, setError] = useState('');
 
-  const handlePlayGame = () => {
-    setStoreItem(PLAYER_NAME_KEY, inputRef.current.value || 'unknown');
-    onGameStart();
+  const handlePlayGame = (e) => {
+    e.preventDefault();
+
+    if (inputRef.current.value) {
+      setStoreItem(PLAYER_NAME_KEY, inputRef.current.value);
+      onGameStart();
+    } else {
+      setError('This field is required');
+    }
+  };
+
+  const handleOnBlur = () => {
+    if (inputRef.current.value) {
+      setError('');
+    }
   };
 
   return (
@@ -27,6 +40,8 @@ const User = ({ onGameStart }) => {
           name={PLAYER_NAME_KEY}
           id={PLAYER_NAME_KEY}
           label="Player name"
+          errorMessage={inputError}
+          onBlur={handleOnBlur}
         />
       </div>
       <div className="justify-center w-full flex">
