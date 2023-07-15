@@ -8,7 +8,6 @@ function useGetAnimals(params) {
 
   useEffect(() => {
     fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchData = async () => {
@@ -16,10 +15,8 @@ function useGetAnimals(params) {
 
     const { data, error } = await getAnimals(params);
 
-    let shuffledArray = [...data, ...data].sort(() => Math.random() * 2 - 0.5);
-
     setError(error);
-    setData(shuffledArray);
+    setData(data);
 
     setIsLoading(false);
   };
