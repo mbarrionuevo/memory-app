@@ -1,19 +1,18 @@
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-
-import Confetti from 'react-confetti';
+import ConfettiExplosion from 'react-confetti-explosion';
 
 import Card from './Card';
 import ErrorScreen from './ErrorScreen';
+import { Button, Spinner } from './common';
 
 import { getStoreItem } from 'utils/localStore';
-import Spinner from './Spinner';
 
 import { PLAYER_NAME_KEY, DEFAULT_PARAMS, PER_PAGE } from 'constants';
 
 import useGetAnimals from 'hooks/useGetAnimals';
 
-const Board = ({ onGamePlayAgain }) => {
+const Board = ({ onChangePlayer }) => {
   const [animals, { isLoading, error, refetch }] =
     useGetAnimals(DEFAULT_PARAMS);
 
@@ -56,6 +55,13 @@ const Board = ({ onGamePlayAgain }) => {
     }
   };
 
+  const handleGamePlayAgain = () => {
+    setIsWon(false);
+    setFlippedCards([]);
+    setTouchCard(null);
+    setScore({ errors: 0, hits: 0 });
+  };
+
   if (error && !isLoading) {
     return <ErrorScreen refetch={refetch} />;
   }
@@ -65,22 +71,28 @@ const Board = ({ onGamePlayAgain }) => {
   }
 
   return (
-    <div className="flex flex-col gap-4 h-full items-center justify-center">
-      {isWon && (
-        <section className="flex flex-col w-full items-center gap-2">
-          <p className="text-white font-medium">
-            Congratulations <span className="font-extrabold">{userName}</span>
-          </p>
-          <button
-            className="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20"
-            onClick={onGamePlayAgain}
-          >
-            Play again!
-          </button>
-        </section>
-      )}
+    <div className="flex h-full flex-col justify-center wide:landscape:justify-start gap-2">
+      <section className="flex flex-col w-full items-center justify-start gap-2">
+        {isWon && (
+          <div className="flex gap-1 text-white text-sm sm:text-base font-medium text-center">
+            <p>Congratulations</p>
+            <span className="font-extrabold">{userName}</span>
+          </div>
+        )}
+        <div className="flex gap-4 text-white">
+          <p>Hits: {score.hits}</p>
+          <p>Errors: {score.errors}</p>
+        </div>
+        {isWon && (
+          <div className="flex gap-4">
+            <Button onClick={handleGamePlayAgain}>Play again!</Button>
+            <ConfettiExplosion duration={3000} />
+            <Button onClick={onChangePlayer}>Change player</Button>
+          </div>
+        )}
+      </section>
       <section
-        className={`grid h-auto max-h-full grid-cols-4 justify-items-center place-items-center gap-3 md:gap-4 w-full max-w-3xl ${
+        className={`grid h-auto grid-cols-4 justify-items-center place-content-center wide:landscape:place-content-start place-items-center gap-3 md:gap-4 w-full max-w-3xl min-w-[320px] ${
           isValidation && 'pointer-events-none'
         }`}
       >
@@ -97,13 +109,12 @@ const Board = ({ onGamePlayAgain }) => {
           />
         ))}
       </section>
-      {/* <Confetti run={isWon} /> */}
     </div>
   );
 };
 
 Board.propTypes = {
-  onGamePlayAgain: PropTypes.func,
+  onChangePlayer: PropTypes.func,
 };
 
 export default Board;

@@ -10,6 +10,7 @@ export default () => {
     },
     resolve: {
       alias: {
+        pages: path.resolve(process.cwd(), './src/pages'),
         components: path.resolve(process.cwd(), './src/components'),
         hooks: path.resolve(process.cwd(), './src/hooks'),
         services: path.resolve(process.cwd(), './src/services'),

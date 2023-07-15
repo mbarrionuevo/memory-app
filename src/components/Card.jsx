@@ -5,12 +5,12 @@ const Card = ({ imgUrl, title, flip, onClick }) => {
     <div
       className={`border select-none border-gray-200 ${
         flip ? 'pointer-events-none' : 'cursor-pointer'
-      } w-20 h-28 min-w-12 md:w-40 md:h-40 rounded-lg shadow transition-colors ease-in duration-300 hover:bg-slate-600`}
+      } w-20 h-28 md:w-40 md:h-40 rounded-lg shadow transition-colors ease-in duration-300 hover:bg-slate-600`}
       onClick={onClick}
     >
       {flip && (
         <img
-          className="object-cover w-full h-full rounded-lg"
+          className="object-cover rounded-lg w-full h-full"
           src={imgUrl}
           alt={title}
         />
