@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 const Card = ({ imgUrl, title, flip, onClick }) => {
   return (
     <div
-      className="border select-none border-gray-200 cursor-pointer w-20 h-28 sm:w-40 sm:h-40 rounded-lg shadow transition-colors ease-in duration-300 hover:bg-slate-600"
+      className={`border select-none border-gray-200 ${
+        flip ? 'pointer-events-none' : 'cursor-pointer'
+      } w-20 h-28 min-w-12 md:w-40 md:h-40 rounded-lg shadow transition-colors ease-in duration-300 hover:bg-slate-600`}
       onClick={onClick}
     >
       {flip && (

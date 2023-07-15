@@ -8,12 +8,15 @@ const User = ({ onGameStart }) => {
   const inputRef = useRef();
 
   const handlePlayGame = () => {
-    setStoreItem(PLAYER_NAME_KEY, inputRef.current.value);
+    setStoreItem(PLAYER_NAME_KEY, inputRef.current.value || 'unknown');
     onGameStart();
   };
 
   return (
-    <section className="flex flex-col gap-4 items-start h-full">
+    <form
+      className="flex flex-col gap-4 items-start h-full"
+      onSubmit={handlePlayGame}
+    >
       <div>
         <label
           htmlFor="email"
@@ -24,6 +27,7 @@ const User = ({ onGameStart }) => {
         <div className="mt-2 w-[250px]">
           <input
             ref={inputRef}
+            autoFocus
             autoComplete="none"
             type="text"
             name={PLAYER_NAME_KEY}
@@ -35,12 +39,12 @@ const User = ({ onGameStart }) => {
       <div className="justify-center w-full flex">
         <button
           className="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20"
-          onClick={handlePlayGame}
+          type="submit"
         >
           Play Game
         </button>
       </div>
-    </section>
+    </form>
   );
 };
 

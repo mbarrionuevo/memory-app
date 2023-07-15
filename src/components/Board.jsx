@@ -7,6 +7,7 @@ import Card from './Card';
 import ErrorScreen from './ErrorScreen';
 
 import { getStoreItem } from 'utils/localStore';
+import Spinner from './Spinner';
 
 import { PLAYER_NAME_KEY, DEFAULT_PARAMS, PER_PAGE } from 'constants';
 
@@ -15,6 +16,7 @@ import useGetAnimals from 'hooks/useGetAnimals';
 const Board = ({ onGamePlayAgain }) => {
   const [animals, { isLoading, error, refetch }] =
     useGetAnimals(DEFAULT_PARAMS);
+
   const [flippedCards, setFlippedCards] = useState([]);
   const [touchCard, setTouchCard] = useState(null);
   const [isValidation, setIsValidation] = useState(false);
@@ -59,13 +61,17 @@ const Board = ({ onGamePlayAgain }) => {
   }
 
   if (isLoading) {
-    return null;
+    return <Spinner className="animate-spin mr-3 h-10 w-10 text-white" />;
   }
 
   return (
-    <div className="flex flex-col gap-4 items-center">
+    <div className="flex flex-col gap-4 h-full items-center">
       {isWon && (
-        <section>
+        <section className="flex flex-col w-full items-center gap-2">
+          <p className="text-white font-medium">
+            Congratulations <span className="font-extrabold">{userName}</span>
+          </p>
+
           <button
             className="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20"
             onClick={onGamePlayAgain}
@@ -92,14 +98,7 @@ const Board = ({ onGamePlayAgain }) => {
           />
         ))}
       </section>
-      {Boolean(animals.length) && (
-        <section className="flex gap-6 text-xl text-white font-semibold">
-          <p>Player: {userName}</p>
-          <p>Errors: {score.errors}</p>
-          <p>Hits: {score.hits}</p>
-        </section>
-      )}
-      <Confetti run={isWon} />
+      {/* <Confetti run={isWon} /> */}
     </div>
   );
 };
