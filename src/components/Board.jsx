@@ -65,13 +65,12 @@ const Board = ({ onGamePlayAgain }) => {
   }
 
   return (
-    <div className="flex flex-col gap-4 h-full items-center">
+    <div className="flex flex-col gap-4 h-full items-center justify-center">
       {isWon && (
         <section className="flex flex-col w-full items-center gap-2">
           <p className="text-white font-medium">
             Congratulations <span className="font-extrabold">{userName}</span>
           </p>
-
           <button
             className="rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-white/20"
             onClick={onGamePlayAgain}
