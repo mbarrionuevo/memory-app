@@ -3,8 +3,7 @@ import { useState } from 'react';
 import { PLAYER_NAME_KEY } from 'constants';
 
 import { getStoreItem, removeStoreItem } from 'utils/localStore';
-import Board from 'components/Board';
-import User from 'components/User';
+import { Board, User } from 'components';
 
 function MemoryGame() {
   const [showGame, setShowGame] = useState(getStoreItem(PLAYER_NAME_KEY));

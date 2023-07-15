@@ -2,8 +2,12 @@ import { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { setStoreItem } from 'utils/localStore';
+
 import { PLAYER_NAME_KEY } from 'constants';
-import { Button, Input } from './common';
+
+import { Button, Input } from '../common';
+
+import useStyles from './styles';
 
 const User = ({ onGameStart }) => {
   const inputRef = useRef();
@@ -26,12 +30,11 @@ const User = ({ onGameStart }) => {
     }
   };
 
+  const styles = useStyles();
+
   return (
-    <form
-      className="flex flex-col gap-4 items-start h-full"
-      onSubmit={handlePlayGame}
-    >
-      <div className="mt-2 w-[250px]">
+    <form className={styles.form} onSubmit={handlePlayGame}>
+      <div className={styles.playerNameContainer}>
         <Input
           ref={inputRef}
           autoFocus
@@ -44,7 +47,7 @@ const User = ({ onGameStart }) => {
           onBlur={handleOnBlur}
         />
       </div>
-      <div className="justify-center w-full flex">
+      <div className={styles.buttonContainer}>
         <Button type="submit">Play Game</Button>
       </div>
     </form>

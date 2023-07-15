@@ -1,10 +1,14 @@
 import PropTypes from 'prop-types';
-import { Button } from './common';
+import { Button } from '../common';
+
+import useStyles from './styles';
 
 const ErrorScreen = ({ refetch }) => {
+  const styles = useStyles();
+
   return (
-    <div className="flex flex-col gap-2">
-      <h1 className="text-xl text-white">Oops, something went wrong!</h1>
+    <div className={styles.container}>
+      <h1 className={styles.text}>Oops, something went wrong!</h1>
       <Button onClick={refetch}>Try again</Button>
     </div>
   );

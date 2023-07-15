@@ -2,17 +2,21 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import ConfettiExplosion from 'react-confetti-explosion';
 
-import Card from './Card';
-import ErrorScreen from './ErrorScreen';
-import { Button, Spinner } from './common';
+import { Button, Spinner } from '../common';
 
 import { getStoreItem } from 'utils/localStore';
 
 import { PLAYER_NAME_KEY, DEFAULT_PARAMS, PER_PAGE } from 'constants';
 
+import { ErrorScreen, Card } from 'components';
+
 import useGetAnimals from 'hooks/useGetAnimals';
 
+import useStyles from './styles';
+
 const Board = ({ onChangePlayer }) => {
+  const styles = useStyles();
+
   const [animals, { isLoading, error, refetch }] =
     useGetAnimals(DEFAULT_PARAMS);
 
@@ -67,35 +71,31 @@ const Board = ({ onChangePlayer }) => {
   }
 
   if (isLoading) {
-    return <Spinner className="animate-spin mr-3 h-10 w-10 text-white" />;
+    return <Spinner className={styles.spinner} />;
   }
 
   return (
-    <div className="flex h-full flex-col justify-center wide:landscape:justify-start gap-2">
-      <section className="flex flex-col w-full items-center justify-start gap-2">
+    <div className={styles.boardContainer}>
+      <section className={styles.scoreContainer}>
         {isWon && (
-          <div className="flex gap-1 text-white text-sm sm:text-base font-medium text-center">
+          <div className={styles.congratulations}>
             <p>Congratulations</p>
             <span className="font-extrabold">{userName}</span>
           </div>
         )}
-        <div className="flex gap-4 text-white">
+        <div className={styles.score}>
           <p>Hits: {score.hits}</p>
           <p>Errors: {score.errors}</p>
         </div>
         {isWon && (
-          <div className="flex gap-4">
+          <div className={styles.buttonsContainer}>
             <Button onClick={handleGamePlayAgain}>Play again!</Button>
             <ConfettiExplosion duration={3000} />
             <Button onClick={onChangePlayer}>Change player</Button>
           </div>
         )}
       </section>
-      <section
-        className={`grid h-auto grid-cols-4 justify-items-center place-content-center wide:landscape:place-content-start place-items-center gap-3 md:gap-4 w-full max-w-3xl min-w-[320px] ${
-          isValidation && 'pointer-events-none'
-        }`}
-      >
+      <section className={styles.cardsContainer(isValidation)}>
         {animals?.map((animal, index) => (
           <Card
             imgUrl={animal.imgUrl}
