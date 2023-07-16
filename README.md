@@ -4,7 +4,7 @@ Memory App is a simple memory matching game built with React. The goal of the ga
 
 ## Demo
 
-You can play the game online at: [Memory App Demo](https://example.com/memory-app)
+You can play the game online at: [Memory App Demo](https://mbarrionuevo.github.io/memory-app/)
 
 ## Features
 
