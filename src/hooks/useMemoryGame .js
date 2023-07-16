@@ -29,7 +29,7 @@ const useMemoryGame = (totalCards = [], totalMatch = 8) => {
                 : card
             )
           );
-        }, 1000);
+        }, 1500);
       } else {
         setIsValidation(false);
         setScore((prev) => ({ ...prev, hits: prev.hits + 1 }));
