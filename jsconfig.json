@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
+    "types": ["vitest/globals"],
     "paths": {
       "pages/*": ["src/pages/*"],
       "components/*": ["src/components/*"],
@@ -8,6 +9,6 @@
       "services/*":["src/services/*"],
       "utils/*":["src/utils/*"],
       "constants/*":["src/constants/*"]
-    }
-  }
+    },
+  },
 }

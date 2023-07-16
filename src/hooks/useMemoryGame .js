@@ -18,7 +18,7 @@ const useMemoryGame = (totalCards = [], totalMatch = 8) => {
       setIsValidation(true);
       const [firstCard, secondCard] = flippedCards;
       if (firstCard.id !== secondCard.id) {
-        setScore((prev) => ({ ...prev, errors: prev.errors++ }));
+        setScore((prev) => ({ ...prev, errors: prev.errors + 1 }));
 
         setTimeout(() => {
           setIsValidation(false);
@@ -32,7 +32,7 @@ const useMemoryGame = (totalCards = [], totalMatch = 8) => {
         }, 1000);
       } else {
         setIsValidation(false);
-        setScore((prev) => ({ ...prev, hits: prev.hits++ }));
+        setScore((prev) => ({ ...prev, hits: prev.hits + 1 }));
       }
 
       setFlippedCards([]);
