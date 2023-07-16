@@ -6,7 +6,7 @@ export default {
     extend: {
       screens: {
         wide: {
-          raw: `only screen and (max-height: 480px) and (max-width: 960px)`,
+          raw: `only screen and (max-height: 865px) and (min-width: 667px)`,
         },
         landscape: {
           raw: '(orientation: landscape)',
